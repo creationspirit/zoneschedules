@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { Schedule } from '../../models/schedule';
+import { ScheduleService } from '../../services/schedule-service/schedule.service';
+import { ZoneService } from '../../services/zone-service/zone.service';
+import { ScheduleZone } from '../../models/schedule';
 
 @Component({
   selector: 'app-zone-overview',
@@ -9,63 +13,26 @@ import { Schedule } from '../../models/schedule';
 })
 export class ZoneOverviewComponent implements OnInit {
 
-  schedules: Schedule[] = [
-    {
-      time: {
-        hour: 5,
-        minute: 10
-      },
-      temperature: 25,
-      zones: [
-        {
-          id: 1,
-          name: 'Zone 1',
-        }
-      ],
-    },
-    {
-      time: {
-        hour: 10,
-        minute: 30
-      },
-      temperature: 15,
-      zones: [
-        {
-          id: 1,
-          name: 'Zone 1',
-        },
-        {
-          id: 2,
-          name: 'Zone 2',
-        }
-      ],
-    },
-    {
-      time: {
-        hour: 17,
-        minute: 0
-      },
-      temperature: 30,
-      zones: [
-        {
-          id: 1,
-          name: 'Zone 1',
-        },
-        {
-          id: 2,
-          name: 'Zone 2',
-        },
-        {
-          id: 3,
-          name: 'Zone 3',
-        }
-      ],
-    },
-  ];
+  zoneFilter$: BehaviorSubject<string>;
+  filteredSchedules$: Observable<ScheduleZone[]>;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    public scheduleService: ScheduleService,
+    public zoneService: ZoneService
+  ) {
   }
 
+  ngOnInit(): void {
+    this.zoneFilter$ = new BehaviorSubject('all');
+    this.filteredSchedules$ = combineLatest([this.scheduleService.schedulesWithZones$, this.zoneFilter$]).pipe(
+      map(([schedules, filter]) => {
+        return filter === 'all' ? schedules : schedules.filter(schedule => schedule.zones.find(zone => zone.id === parseInt(filter, 10)));
+      })
+    );
+
+  }
+
+  filterChange(value: string) {
+    this.zoneFilter$.next(value);
+  }
 }

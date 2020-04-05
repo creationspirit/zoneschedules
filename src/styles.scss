@@ -13,12 +13,15 @@ body {
 }
 
 .btn {
+  text-decoration: none;
+  display: inline-block;
   background-color: #2196f3;
   color: white;
   border-radius: 5px;
   font-weight: 700;
   height: 40px;
-  width: 130px;
+  line-height: 40px;
+  width: 110px;
   text-transform: uppercase;
   text-align: center;
   transition: opacity 0.2s ease-in;

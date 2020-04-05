@@ -1,15 +1,20 @@
 <div class="view-container">
   <h1>Zone overview</h1>
+
   <a routerLink="/new" class="btn">New schedule</a>
+  <select class="zone-filter" [value]="zoneFilter$.getValue()" (change)="filterChange($event.target.value)">
+    <option value="all">All</option>
+    <option *ngFor="let zone of zoneService.zones$ | async" [value]="zone.id">{{zone.name}}</option>
+ </select>`
   <div class="schedule-list">
-    <div class="schedule-item" *ngFor="let schedule of schedules">
+    <div class="schedule-item" *ngFor="let schedule of filteredSchedules$ | async">
       <div class="schedule-item__value">
         <i class="material-icons schedule-item__icon">schedule</i>
         <span>13:45</span>
       </div>
       <div class="schedule-item__value">
         <i class="material-icons schedule-item__icon">ac_unit</i>
-        <span>25 C</span>
+        <span>{{ schedule.temperature }} &deg;C</span>
       </div>
       <div class="schedule-item__button-strip">
         <button class="btn btn-icon"><i class="material-icons">create</i></button>
