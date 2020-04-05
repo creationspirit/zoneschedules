@@ -1,0 +1,20 @@
+<div class="view-container">
+  <h1>Zone overview</h1>
+  <a routerLink="/new" class="btn">New schedule</a>
+  <div class="schedule-list">
+    <div class="schedule-item" *ngFor="let schedule of schedules">
+      <div class="schedule-item__value">
+        <i class="material-icons schedule-item__icon">schedule</i>
+        <span>13:45</span>
+      </div>
+      <div class="schedule-item__value">
+        <i class="material-icons schedule-item__icon">ac_unit</i>
+        <span>25 C</span>
+      </div>
+      <div class="schedule-item__button-strip">
+        <button class="btn btn-icon"><i class="material-icons">create</i></button>
+        <button class="btn btn-danger btn-icon"><i class="material-icons">clear</i></button>
+      </div>
+    </div>
+  </div>
+</div>

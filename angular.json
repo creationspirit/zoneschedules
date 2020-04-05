@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "zone-schedules"
+    }
+  },
+  "defaultProject": "zone-schedules",
+  "cli": {
+    "analytics": false
+  }
 }
