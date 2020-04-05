@@ -2,7 +2,7 @@
   <h1>Zone overview</h1>
 
   <div class="list-header">
-    <a routerLink="/new" class="btn">New schedule</a>
+    <a routerLink="/edit/new" class="btn">New schedule</a>
     <div class="zone-filter">
       <span>Zone:</span>
       <select [value]="zoneFilter$.getValue()" (change)="filterChange($event.target.value)">
@@ -28,7 +28,7 @@
         <span class="token" *ngFor="let zone of schedule.zones">{{zone.name}}</span>
       </div>
       <div class="schedule-item__button-strip">
-        <button class="btn btn-icon"><i class="material-icons">create</i></button>
+        <a routerLink="/edit/{{schedule.id}}" class="btn btn-icon"><i class="material-icons">create</i></a>
         <button class="btn btn-danger btn-icon"><i class="material-icons">clear</i></button>
       </div>
     </div>

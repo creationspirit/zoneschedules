@@ -13,6 +13,7 @@ export class ScheduleService {
 
   private readonly _schedules = new BehaviorSubject<Schedule[]>([
     {
+      id: 1,
       time: {
         hour: 5,
         minute: 10
@@ -21,6 +22,7 @@ export class ScheduleService {
       zones: [9, 10, 11, 4, 5]
     },
     {
+      id: 2,
       time: {
         hour: 18,
         minute: 30
@@ -29,6 +31,7 @@ export class ScheduleService {
       zones: [5, 6, 7, 10]
     },
     {
+      id: 3,
       time: {
         hour: 17,
         minute: 0

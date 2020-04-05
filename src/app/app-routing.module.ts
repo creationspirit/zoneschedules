@@ -8,7 +8,8 @@ import { ScheduleEditComponent } from './components/schedule-edit/schedule-edit.
 const routes: Routes = [
   { path: '', redirectTo: '/overview', pathMatch: 'full' },
   { path: 'overview', component: ZoneOverviewComponent },
-  { path: 'new', component: ScheduleEditComponent }
+  { path: 'edit/new', component: ScheduleEditComponent },
+  { path: 'edit/:id', component: ScheduleEditComponent },
 ];
 
 @NgModule({
