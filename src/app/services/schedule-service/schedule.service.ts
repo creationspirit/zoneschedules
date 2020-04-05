@@ -22,7 +22,7 @@ export class ScheduleService {
     },
     {
       time: {
-        hour: 10,
+        hour: 18,
         minute: 30
       },
       temperature: 15,
