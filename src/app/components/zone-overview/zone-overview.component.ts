@@ -40,4 +40,8 @@ export class ZoneOverviewComponent implements OnInit {
     const pad = (num: number, size: number) => ('000' + num).slice(size * -1);
     return `${pad(time.hour, 2)}:${pad(time.minute, 2)}`;
   }
+
+  deleteSchedule(id: number) {
+    this.scheduleService.deleteSchedule(id);
+  }
 }

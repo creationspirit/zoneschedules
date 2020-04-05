@@ -29,7 +29,7 @@
       </div>
       <div class="schedule-item__button-strip">
         <a routerLink="/edit/{{schedule.id}}" class="btn btn-icon"><i class="material-icons">create</i></a>
-        <button class="btn btn-danger btn-icon"><i class="material-icons">clear</i></button>
+        <button (click)="deleteSchedule(schedule.id)" class="btn btn-danger btn-icon"><i class="material-icons">clear</i></button>
       </div>
     </div>
   </div>

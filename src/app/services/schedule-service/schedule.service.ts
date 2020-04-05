@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { Schedule } from '../../models/schedule';
+import { Schedule, Time } from '../../models/schedule';
 import { ZoneService } from '../zone-service/zone.service';
 
 
@@ -66,5 +66,28 @@ export class ScheduleService {
 
   private setSchedules(val: Schedule[]) {
     this._schedules.next(val);
+  }
+
+  deleteSchedule(id: number) {
+    this.setSchedules(this.schedules.filter(schedule => schedule.id !== id));
+  }
+
+  updateSchedule(id: number, newSchedule: Schedule) {
+    const oldScheduleIndex = this.schedules.findIndex(schedule => schedule.id === id);
+    if (oldScheduleIndex >= 0) {
+      const scheduleArray = [...this.schedules];
+      scheduleArray[oldScheduleIndex] = newSchedule;
+      this.setSchedules(scheduleArray);
+    }
+  }
+
+  addSchedule(time: Time, temperature: number, zones: number[]) {
+    console.log('fdnsjk')
+    this.setSchedules([...this.schedules, {
+      id: this.schedules.length + 1,
+      time,
+      temperature,
+      zones
+    }]);
   }
 }
