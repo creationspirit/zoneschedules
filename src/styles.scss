@@ -4,6 +4,7 @@ body {
   background-color: rgba(41,42,59,100);
   color: white;
   font-family: 'Lato', sans-serif;
+  padding-top: 80px;
 }
 
 .view-container {
@@ -106,5 +107,37 @@ input[type="number"] {
     color: white;
     opacity: 0.5;
     text-align: center;
+  }
+}
+
+nav {
+  background-color: rgb(22, 23, 34);
+  width: 100vw;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 60px;
+}
+
+.navlink {
+  color: #2196f3;
+  transition: opacity 0.2s ease-in;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  i {
+    font-size: 48px;
+  }
+}
+
+.filter {
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 1.1rem;
+
+  label {
+    margin-right: 10px;
   }
 }

@@ -3,8 +3,8 @@
 
   <div class="list-header">
     <a routerLink="/edit/new" class="btn">New schedule</a>
-    <div class="zone-filter">
-      <span>Zone:</span>
+    <div class="filter">
+      <label>Zone:</label>
       <select [value]="zoneFilter$.getValue()" (change)="filterChange($event.target.value)">
         <option value="all">All</option>
         <option *ngFor="let zone of zoneService.zones$ | async" [value]="zone.id">{{zone.name}}</option>
@@ -12,25 +12,30 @@
     </div>
   </div>
   <div class="schedule-list">
-    <div class="schedule-item" *ngFor="let schedule of filteredSchedules$ | async">
-      <div class="schedule-item_title-values">
-        <div class="schedule-item__value">
-          <i class="material-icons schedule-item__icon">schedule</i>
-          <span>{{ formatTime(schedule.time) }}</span>
+    <ng-container *ngIf="(filteredSchedules$| async)?.length > 0; else loading">
+      <div class="schedule-item" *ngFor="let schedule of filteredSchedules$ | async">
+        <div class="schedule-item_title-values">
+          <div class="schedule-item__value">
+            <i class="material-icons schedule-item__icon">schedule</i>
+            <span>{{ formatTime(schedule.time) }}</span>
+          </div>
+          <div class="schedule-item__value">
+            <i class="material-icons schedule-item__icon">ac_unit</i>
+            <span>{{ schedule.temperature }} &deg;C</span>
+          </div>
         </div>
-        <div class="schedule-item__value">
-          <i class="material-icons schedule-item__icon">ac_unit</i>
-          <span>{{ schedule.temperature }} &deg;C</span>
+        <div class='schedule-item__minor-values'>
+          <h3>Designated zones:</h3>
+          <span class="token" *ngFor="let zone of schedule.zones">{{zone.name}}</span>
+        </div>
+        <div class="schedule-item__button-strip">
+          <a routerLink="/edit/{{schedule.id}}" class="btn btn-icon"><i class="material-icons">create</i></a>
+          <button (click)="deleteSchedule(schedule.id)" class="btn btn-danger btn-icon"><i class="material-icons">clear</i></button>
         </div>
       </div>
-      <div class='schedule-item__minor-values'>
-        <h3>Designated zones:</h3>
-        <span class="token" *ngFor="let zone of schedule.zones">{{zone.name}}</span>
-      </div>
-      <div class="schedule-item__button-strip">
-        <a routerLink="/edit/{{schedule.id}}" class="btn btn-icon"><i class="material-icons">create</i></a>
-        <button (click)="deleteSchedule(schedule.id)" class="btn btn-danger btn-icon"><i class="material-icons">clear</i></button>
-      </div>
-    </div>
+    </ng-container>
+    <ng-template #loading>
+      <p>You don't have any schedules yet.</p>
+    </ng-template>
   </div>
 </div>
