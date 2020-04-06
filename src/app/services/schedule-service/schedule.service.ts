@@ -4,6 +4,7 @@ import { map, tap } from 'rxjs/operators';
 
 import { Schedule, Time } from '../../models/schedule';
 import { ZoneService } from '../zone-service/zone.service';
+import { UnitService } from '../unit-service/unit.service';
 
 
 @Injectable({
@@ -11,35 +12,7 @@ import { ZoneService } from '../zone-service/zone.service';
 })
 export class ScheduleService {
 
-  private readonly _schedules = new BehaviorSubject<Schedule[]>([
-    {
-      id: 1,
-      time: {
-        hour: 5,
-        minute: 10
-      },
-      temperature: 25,
-      zones: [9, 10, 11, 4, 5]
-    },
-    {
-      id: 2,
-      time: {
-        hour: 18,
-        minute: 30
-      },
-      temperature: 15,
-      zones: [5, 6, 7, 10]
-    },
-    {
-      id: 3,
-      time: {
-        hour: 17,
-        minute: 0
-      },
-      temperature: 30,
-      zones: [1, 2, 3]
-    },
-  ]);
+  private readonly _schedules = new BehaviorSubject<Schedule[]>([]);
 
   readonly schedules$ = this._schedules.asObservable().pipe(
     tap(schedules => schedules.sort((schedule1, schedule2) => {
@@ -58,7 +31,12 @@ export class ScheduleService {
     )
   );
 
-  constructor(private zoneService: ZoneService) { }
+  constructor(
+    private zoneService: ZoneService,
+    private unitService: UnitService
+    ) {
+      this.unitService.unit$.subscribe(unit => this.changeTemperatureUnit(unit));
+    }
 
   get schedules(): Schedule[] {
     return this._schedules.getValue();
@@ -82,12 +60,28 @@ export class ScheduleService {
   }
 
   addSchedule(time: Time, temperature: number, zones: number[]) {
-    console.log('fdnsjk')
     this.setSchedules([...this.schedules, {
       id: this.schedules.length + 1,
       time,
       temperature,
       zones
     }]);
+  }
+
+  changeTemperatureUnit(unit: string) {
+    this.setSchedules(this.schedules.map(schedule => {
+      return {
+        ...schedule,
+        temperature: unit === 'C' ? this.fToC(schedule.temperature) : this.cToF(schedule.temperature),
+      };
+    }));
+  }
+
+  cToF(c: number) {
+    return (c * 1.8) + 32;
+  }
+
+  fToC(f: number) {
+    return (f - 32) / 1.8;
   }
 }

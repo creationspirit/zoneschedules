@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 
 import { ScheduleService } from '../../services/schedule-service/schedule.service';
 import { ZoneService } from '../../services/zone-service/zone.service';
+import { UnitService } from '../../services/unit-service/unit.service';
 import { ScheduleZone, Time } from '../../models/schedule';
 
 @Component({
@@ -18,7 +19,8 @@ export class ZoneOverviewComponent implements OnInit {
 
   constructor(
     public scheduleService: ScheduleService,
-    public zoneService: ZoneService
+    public zoneService: ZoneService,
+    public unitService: UnitService
   ) {
   }
 
@@ -26,7 +28,9 @@ export class ZoneOverviewComponent implements OnInit {
     this.zoneFilter$ = new BehaviorSubject('all');
     this.filteredSchedules$ = combineLatest([this.scheduleService.schedulesWithZones$, this.zoneFilter$]).pipe(
       map(([schedules, filter]) => {
-        return filter === 'all' ? schedules : schedules.filter(schedule => schedule.zones.find(zone => zone.id === parseInt(filter, 10)));
+        return filter === 'all' ? schedules : schedules.filter(
+          schedule => schedule.zones.find(zone => zone.id === parseInt(filter, 10))
+        );
       })
     );
 
@@ -39,6 +43,13 @@ export class ZoneOverviewComponent implements OnInit {
   formatTime(time: Time): string {
     const pad = (num: number, size: number) => ('000' + num).slice(size * -1);
     return `${pad(time.hour, 2)}:${pad(time.minute, 2)}`;
+  }
+
+  formatTemperature(temperature: number) {
+    if (Math.round(temperature) !== temperature) {
+      return temperature.toFixed(1);
+    }
+    return temperature;
   }
 
   deleteSchedule(id: number) {

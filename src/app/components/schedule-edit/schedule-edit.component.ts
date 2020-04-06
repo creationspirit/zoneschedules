@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { ScheduleService } from '../../services/schedule-service/schedule.service';
 import { ZoneService } from '../../services/zone-service/zone.service';
+import { UnitService } from '../../services/unit-service/unit.service';
 import { Time } from 'src/app/models/schedule';
 
 @Component({
@@ -20,6 +21,7 @@ export class ScheduleEditComponent implements OnInit {
   constructor(
     public zoneService: ZoneService,
     public scheduleService: ScheduleService,
+    public unitService: UnitService,
     private route: ActivatedRoute,
     private location: Location,
   ) { }
@@ -33,7 +35,6 @@ export class ScheduleEditComponent implements OnInit {
       this.temperature = selectedSchedule.temperature;
       this.zones = selectedSchedule.zones;
     } else {
-      console.log('bla')
       this.time = { hour: 0, minute: 0 };
       this.temperature = 0;
       this.zones = [];

@@ -3,7 +3,7 @@
     <a class="navlink" routerLink="/overview"><i class="material-icons">home</i></a>
     <div class="filter">
       <label>Units:</label>
-      <select class="nav-select">
+      <select [value]="unitService.unit$ | async" (change)="onUnitChange($event.target.value)" class="nav-select">
         <option value="C">&deg;C</option>
         <option value="F">&deg;F</option>
       </select>

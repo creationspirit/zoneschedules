@@ -11,7 +11,7 @@
       <i class="material-icons">ac_unit</i>
       <h3>Temperature</h3>
     </div>
-    <input [(ngModel)]="temperature" type="number" placeholder="0" min="0" max="23"/> &deg;C
+    <input [(ngModel)]="temperature" type="number" placeholder="0" min="0" max="23"/> &deg;{{unitService.unit$ | async}}
     <div class="formgroup-title">
       <i class="material-icons">apartment</i>
       <h3>Zones</h3>

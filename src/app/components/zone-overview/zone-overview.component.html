@@ -21,7 +21,7 @@
           </div>
           <div class="schedule-item__value">
             <i class="material-icons schedule-item__icon">ac_unit</i>
-            <span>{{ schedule.temperature }} &deg;C</span>
+            <span>{{ formatTemperature(schedule.temperature) }} &deg;{{unitService.unit$ | async}}</span>
           </div>
         </div>
         <div class='schedule-item__minor-values'>
